@@ -24,6 +24,10 @@ return new class extends Migration
             // index - data nie moze byc w przeszlosci
             // $table->rawIndex(expression: "CHECK (due_date >= CURRENT_DATE)", name: "...");
             // $table->softDeletes();
+            $table->foreignId("user_id")
+                ->references("id")
+                ->on("users")
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }
