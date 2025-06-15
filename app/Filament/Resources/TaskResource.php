@@ -17,7 +17,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class TaskResource extends Resource
+final class TaskResource extends Resource
 {
     protected static ?string $model = Task::class;
 
@@ -38,9 +38,6 @@ class TaskResource extends Resource
                     ->options(TaskPriorityEnum::class),
                 Forms\Components\DatePicker::make("due_date")
                     ->required(),
-                Select::make("user_id")
-                    ->relationship(name: "user", titleAttribute: "email")
-                    ->required(true),
             ]);
     }
 
@@ -54,8 +51,6 @@ class TaskResource extends Resource
                 Tables\Columns\TextColumn::make("status"),
                 Tables\Columns\TextColumn::make("due_date")
                     ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make("user.email")
                     ->sortable(),
                 Tables\Columns\TextColumn::make("created_at")
                     ->dateTime()

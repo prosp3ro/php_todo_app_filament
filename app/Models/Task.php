@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Enums\TaskPriorityEnum;
 use App\Enums\TaskStatusEnum;
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -12,12 +13,35 @@ final class Task extends Model
     protected static function booted(): void
     {
         static::updating(function (Task $task) {
-            dd($task->getDirty());
+            $task->user_id = auth()->user()->id;
+
+            // zapisywanie historii
+            $task_history = collect($task->getDirty())->except("user_id")->toArray();
+            if (empty($task_history)) {
+                return;
+            }
+
+            $task_changes = [];
+            foreach ($task_history as $history_key => $history_value) {
+                $task_changes[$history_key] = [
+                    $task->getOriginal($history_key),
+                    $history_value
+                ];
+            }
+
+            TaskHistory::create([
+                "task_id" => $task->id,
+                "changes" => json_encode($task_changes)
+            ]);
         });
 
-        // static::retrieved(function (Task $task) {
-        //     // dla "multi tenancy" - kazdy user widzi tylko swoj task
-        // })
+        static::creating(function (Task $task) {
+            $task->user_id = auth()->user()->id;
+        });
+
+        static::addGlobalScope(function (Builder $query) {
+            $query->whereBelongsTo(auth()->user());
+        });
     }
 
     /**

@@ -25,7 +25,7 @@ final class AppPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id("app")
-            ->path("")
+            ->path("/")
             ->spa()
             ->unsavedChangesAlerts()
             // ->databaseTransactions()
@@ -36,7 +36,8 @@ final class AppPanelProvider extends PanelProvider
             ->emailVerification()
             ->profile()
             ->colors([
-                "primary" => Color::Lime,
+                "primary" => Color::Blue,
+                "gray" => Color::Slate
             ])
             ->discoverResources(in: app_path("Filament/Resources"), for: "App\\Filament\\Resources")
             ->discoverPages(in: app_path("Filament/Pages"), for: "App\\Filament\\Pages")
