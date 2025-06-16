@@ -16,4 +16,17 @@ class TaskHistory extends Model
     {
         return $this->belongsTo(related: Task::class, foreignKey: "task_id", ownerKey: "id");
     }
+
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            "changes" => "array",
+            "created_at" => "datetime"
+        ];
+    }
 }

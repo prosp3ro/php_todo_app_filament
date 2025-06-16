@@ -31,7 +31,7 @@ final class Task extends Model
 
             TaskHistory::create([
                 "task_id" => $task->id,
-                "changes" => json_encode($task_changes)
+                "changes" => $task_changes // laravel automatycznie zmieni array na json
             ]);
         });
 

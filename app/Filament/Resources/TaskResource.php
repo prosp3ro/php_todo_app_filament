@@ -13,6 +13,7 @@ use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -28,6 +29,7 @@ final class TaskResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make("name")
+                    ->label("Task name")
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make("description")
@@ -46,6 +48,7 @@ final class TaskResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make("name")
+                    ->label("Task name")
                     ->searchable(),
                 Tables\Columns\TextColumn::make("priority"),
                 Tables\Columns\TextColumn::make("status"),
@@ -66,6 +69,10 @@ final class TaskResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Action::make("history")
+                    ->label("History")
+                    ->icon("heroicon-o-clock")
+                    ->url(fn(Task $record) => static::getUrl("history", ["record" => $record])),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -87,6 +94,7 @@ final class TaskResource extends Resource
             "index" => Pages\ListTasks::route("/"),
             "create" => Pages\CreateTask::route("/create"),
             "edit" => Pages\EditTask::route("/{record}/edit"),
+            "history" => Pages\TaskHistory::route("/{record}/history")
         ];
     }
 }
