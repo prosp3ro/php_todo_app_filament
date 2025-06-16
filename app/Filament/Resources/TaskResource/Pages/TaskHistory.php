@@ -5,6 +5,7 @@ namespace App\Filament\Resources\TaskResource\Pages;
 use App\Filament\Resources\TaskResource;
 use App\Models\TaskHistory as TaskHistoryModel;
 use Filament\Resources\Pages\Page;
+use Illuminate\Contracts\Support\Htmlable;
 
 final class TaskHistory extends Page
 {
@@ -25,5 +26,10 @@ final class TaskHistory extends Page
             ->where("task_id", "=", $this->record->id)
             ->orderBy("created_at", "desc")
             ->get(["changes", "created_at"]);
+    }
+
+    public function getTitle(): string|Htmlable
+    {
+        return "Task history";
     }
 }
