@@ -14,6 +14,7 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -49,9 +50,14 @@ final class TaskResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make("name")
                     ->label("Task name")
+                    ->sortable()
                     ->searchable(),
-                Tables\Columns\TextColumn::make("priority"),
-                Tables\Columns\TextColumn::make("status"),
+                Tables\Columns\TextColumn::make("priority")
+                    ->searchable()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make("status")
+                    ->searchable()
+                    ->sortable(),
                 Tables\Columns\TextColumn::make("due_date")
                     ->date()
                     ->sortable(),
@@ -64,8 +70,14 @@ final class TaskResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort("due_date", "asc")
             ->filters([
-                //
+                Filter::make("low_priority")->query(fn(Builder $query): Builder => $query->where("priority", "low")),
+                Filter::make("medium_priority")->query(fn(Builder $query): Builder => $query->where("priority", "medium")),
+                Filter::make("high_priority")->query(fn(Builder $query): Builder => $query->where("priority", "high")),
+                Filter::make("to_do")->query(fn(Builder $query): Builder => $query->where("status", "to-do")),
+                Filter::make("in_progress")->query(fn(Builder $query): Builder => $query->where("status", "in progress")),
+                Filter::make("done")->query(fn(Builder $query): Builder => $query->where("status", "done")),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
