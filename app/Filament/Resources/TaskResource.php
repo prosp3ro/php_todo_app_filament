@@ -25,6 +25,11 @@ final class TaskResource extends Resource
 
     protected static ?string $navigationIcon = "heroicon-o-rectangle-stack";
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->scopes("onlyOwner");
+    }
+
     public static function form(Form $form): Form
     {
         return $form

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\TaskPriorityEnum;
 use App\Enums\TaskStatusEnum;
 use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -39,9 +40,15 @@ final class Task extends Model
             $task->user_id = auth()->user()->id;
         });
 
-        static::addGlobalScope(function (Builder $query) {
-            $query->whereBelongsTo(auth()->user());
-        });
+        // static::addGlobalScope(function (Builder $query) {
+        //     $query->whereBelongsTo(auth()->user());
+        // });
+    }
+
+    #[Scope]
+    protected function onlyOwner(Builder $query): void
+    {
+        $query->whereBelongsTo(auth()->user());
     }
 
     /**
