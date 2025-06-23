@@ -72,12 +72,12 @@ final class TaskResource extends Resource
             ])
             ->defaultSort("due_date", "asc")
             ->filters([
-                Filter::make("low_priority")->query(fn(Builder $query): Builder => $query->where("priority", "low")),
-                Filter::make("medium_priority")->query(fn(Builder $query): Builder => $query->where("priority", "medium")),
-                Filter::make("high_priority")->query(fn(Builder $query): Builder => $query->where("priority", "high")),
-                Filter::make("to_do")->query(fn(Builder $query): Builder => $query->where("status", "to-do")),
-                Filter::make("in_progress")->query(fn(Builder $query): Builder => $query->where("status", "in progress")),
-                Filter::make("done")->query(fn(Builder $query): Builder => $query->where("status", "done")),
+                Filter::make("low_priority")->query(fn(Builder $query): Builder => $query->where("priority", "low"))->toggle(),
+                Filter::make("medium_priority")->query(fn(Builder $query): Builder => $query->where("priority", "medium"))->toggle(),
+                Filter::make("high_priority")->query(fn(Builder $query): Builder => $query->where("priority", "high"))->toggle(),
+                Filter::make("to_do")->query(fn(Builder $query): Builder => $query->where("status", "to-do"))->toggle(),
+                Filter::make("in_progress")->query(fn(Builder $query): Builder => $query->where("status", "in progress"))->toggle(),
+                Filter::make("done")->query(fn(Builder $query): Builder => $query->where("status", "done"))->toggle(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
