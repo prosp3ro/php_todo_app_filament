@@ -45,3 +45,11 @@ echo "FORWARD_DB_PORT=3306" >> .env
 ./vendor/bin/sail artisan migrate
 npm run dev
 ```
+
+4. Wystartuj kolejkę:
+
+```bash
+php artisan queue:work
+# albo
+sail artisan queue:work
+```
