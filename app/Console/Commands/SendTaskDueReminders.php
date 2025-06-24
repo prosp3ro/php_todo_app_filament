@@ -11,22 +11,15 @@ use Illuminate\Support\Facades\Mail;
 class SendTaskDueReminders extends Command
 {
     /**
-     * The name and signature of the console command.
-     *
      * @var string
      */
     protected $signature = "app:send-task-due-reminders";
 
     /**
-     * The console command description.
-     *
      * @var string
      */
     protected $description = "Command description";
 
-    /**
-     * Execute the console command.
-     */
     public function handle()
     {
         $tomorrow = Carbon::tomorrow()->toDateString();
@@ -38,6 +31,6 @@ class SendTaskDueReminders extends Command
             }
         }
 
-        $this->info("command: send task due reminder send");
+        $this->info("command: send task due reminder");
     }
 }
