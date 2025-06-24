@@ -90,6 +90,13 @@ final class TaskResource extends Resource
                     ->label("History")
                     ->icon("heroicon-o-clock")
                     ->url(fn(Task $record) => static::getUrl("history", ["record" => $record])),
+                Action::make("create public link")
+                    ->requiresConfirmation(true)
+                    ->icon("heroicon-o-link")
+                    ->action(function () {
+                        // tworzenie linku publicznego
+                        // ...
+                    })
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -111,7 +118,7 @@ final class TaskResource extends Resource
             "index" => Pages\ListTasks::route("/"),
             "create" => Pages\CreateTask::route("/create"),
             "edit" => Pages\EditTask::route("/{record}/edit"),
-            "history" => Pages\TaskHistory::route("/{record}/history")
+            "history" => Pages\TaskHistory::route("/{record}/history"),
         ];
     }
 }
