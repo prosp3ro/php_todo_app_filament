@@ -7,9 +7,9 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-## Instalacja aplikacji
+## TODO App
 
-1. Sklonuj repozytorium i zainstaluj zależności:
+### Sklonuj repozytorium i zainstaluj zależności:
 
 ```bash
 git clone https://github.com/prosp3ro/php_todo_app_filament
@@ -18,16 +18,16 @@ composer install
 npm install
 ```
 
-2. Skonfiguruj plik .env:
+### Skonfiguruj plik .env:
 
 ```bash
 cp .env.example .env
 php artisan key:generate
 ```
 
-3. Uruchom projekt
+### Uruchom projekt
 
-Bez dockera:
+#### Bez dockera:
 
 ```bash
 php artisan migrate
@@ -35,7 +35,8 @@ php artisan serve
 npm run dev
 ```
 
-Z użyciem laravel sail:
+#### Z użyciem laravel sail:
+
 Najpierw w pliku `.env` ustaw odpowiednie porty (FORWARD).
 
 ```bash
