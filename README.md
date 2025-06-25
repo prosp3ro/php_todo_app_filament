@@ -36,11 +36,9 @@ npm run dev
 ```
 
 Z użyciem laravel sail:
+Najpierw w pliku `.env` ustaw odpowiednie porty (FORWARD).
 
 ```bash
-echo "VITE_PORT=5173" >> .env
-echo "FORWARD_DB_PORT=3306" >> .env
-
 ./vendor/bin/sail up -d
 ./vendor/bin/sail artisan migrate
 npm run dev
